@@ -4,6 +4,7 @@
 #include <condition_variable>
 #include <stdio.h>
 #include <fstream>
+#include <atomic>
 #include <ctime>
 
 std::vector<std::string> buffer1;
@@ -12,8 +13,8 @@ std::mutex b1_Mutex;
 std::mutex b2_Mutex;
 
 int DEFAULT_CAPACITY = 2;
-bool shutdown = false;
-bool listening = true;
+std::atomic<bool> shutdown = false;
+std::atomic<bool> listening = true;
 
 void listen() {
 	while (true) {
@@ -57,7 +58,7 @@ void write() {
 	}
 }
 
-void main(std::string log) {
+void main(int argc, char** argv) {
 
 
 	std::clock_t start;
