@@ -73,7 +73,7 @@ void main(int argc, char** argv) {
 	std::thread T2(write);
 
 	int i = 0;
-	while (i < 1000000) {
+	while (i < 100000) {
 		b1_Mutex.lock();
 		buffer1.push_back("Test" + std::to_string(i));
 		b1_Mutex.unlock();
@@ -84,6 +84,11 @@ void main(int argc, char** argv) {
 
 	T1.join();
 	T2.join();
+
+	//Deallocate memory
+	std::vector<std::string>().swap(buffer1);
+	std::vector<std::string>().swap(buffer2);
+
 
 	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 	std::cout << "durration: " << duration << '\n';
